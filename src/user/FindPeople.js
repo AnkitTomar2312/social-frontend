@@ -102,7 +102,7 @@ export default function FindPeople() {
   };
   return (
     <div>
-      {/* <Paper className={classes.root} elevation={4}>
+      <Paper className={classes.root} elevation={4}>
         <Typography type="title" className={classes.title}>
           Who to follow
         </Typography>
@@ -151,7 +151,7 @@ export default function FindPeople() {
         onClose={handleRequestClose}
         autoHideDuration={6000}
         message={<span className={classes.snack}>{values.followMessage}</span>}
-      /> */}
+      />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import baseURL from "../config";
 
+//used for register user in Signup.js
 const create = async (user) => {
   try {
     let response = await fetch(baseURL + "/api/users/register", {
@@ -16,6 +17,7 @@ const create = async (user) => {
   }
 };
 
+//Used to List the users in the Users.js
 const list = async (signal) => {
   try {
     let response = await fetch(baseURL + "/api/users", {
@@ -28,6 +30,7 @@ const list = async (signal) => {
   }
 };
 
+//reading the data by userId used in EditProfile.js and Profile.js
 const read = async (params, credentials, signal) => {
   try {
     let response = await fetch(baseURL + "/api/users/" + params.userId, {
@@ -45,6 +48,7 @@ const read = async (params, credentials, signal) => {
   }
 };
 
+//update will work in the EditProfile.js
 const update = async (params, credentials, user) => {
   try {
     let response = await fetch(baseURL + "/api/users/" + params.userId, {
@@ -63,6 +67,7 @@ const update = async (params, credentials, user) => {
   }
 };
 
+//used in the DeleteUser.js
 const remove = async (params, credentials) => {
   try {
     let response = await fetch(baseURL + "api/users" + params.userId, {
@@ -78,7 +83,7 @@ const remove = async (params, credentials) => {
     console.log(err);
   }
 };
-
+//used in the FindPeople.js
 const follow = async (params, credentials, followId) => {
   try {
     let response = await fetch(baseURL + "/api/users/follow/", {
@@ -114,7 +119,7 @@ const unfollow = async (params, credentials, unfollowId) => {
     console.log(err);
   }
 };
-
+//used in the FindPeople.js
 const findPeople = async (params, credentials, signal) => {
   try {
     let response = await fetch(

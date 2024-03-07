@@ -1,12 +1,13 @@
-import baseURL from '../config';
+import baseURL from "../config";
 
+//Used in NewPost.js
 const create = async (params, credentials, post) => {
   try {
-    let response = await fetch(baseURL + '/api/posts/new/' + params.userId, {
-      method: 'POST',
+    let response = await fetch(baseURL + "/api/posts/new/" + params.userId, {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        Authorization: 'Bearer ' + credentials.t,
+        Accept: "application/json",
+        Authorization: "Bearer " + credentials.t,
       },
       body: post,
     });
@@ -16,14 +17,15 @@ const create = async (params, credentials, post) => {
   }
 };
 
+//get the posts uploaded by one person
 const listByUser = async (params, credentials) => {
   try {
-    let response = await fetch(baseURL + '/api/posts/by/' + params.userId, {
-      method: 'GET',
+    let response = await fetch(baseURL + "/api/posts/by/" + params.userId, {
+      method: "GET",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + credentials.t,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + credentials.t,
       },
     });
 
@@ -35,13 +37,13 @@ const listByUser = async (params, credentials) => {
 
 const listNewsFeed = async (params, credentials, signal) => {
   try {
-    let response = await fetch(baseURL + '/api/posts/feed/' + params.userId, {
-      method: 'GET',
+    let response = await fetch(baseURL + "/api/posts/feed/" + params.userId, {
+      method: "GET",
       signal: signal,
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + credentials.t,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + credentials.t,
       },
     });
 
@@ -53,12 +55,12 @@ const listNewsFeed = async (params, credentials, signal) => {
 
 const remove = async (params, credentials) => {
   try {
-    let response = await fetch(baseURL + '/api/posts/' + params.userId, {
-      method: 'DELETE',
+    let response = await fetch(baseURL + "/api/posts/" + params.userId, {
+      method: "DELETE",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + credentials.t,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + credentials.t,
       },
     });
 
@@ -70,12 +72,12 @@ const remove = async (params, credentials) => {
 
 const like = async (params, credentials, postId) => {
   try {
-    let response = await fetch(baseURL + '/api/posts/like/', {
-      method: 'PUT',
+    let response = await fetch(baseURL + "/api/posts/like/", {
+      method: "PUT",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + credentials.t,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + credentials.t,
       },
       body: JSON.stringify({ userId: params.userId, postId: postId }),
     });
@@ -87,12 +89,12 @@ const like = async (params, credentials, postId) => {
 
 const unlike = async (params, credentials, postId) => {
   try {
-    let response = await fetch(baseURL + '/api/posts/unlike/', {
-      method: 'PUT',
+    let response = await fetch(baseURL + "/api/posts/unlike/", {
+      method: "PUT",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + credentials.t,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + credentials.t,
       },
       body: JSON.stringify({ userId: params.userId, postId: postId }),
     });
@@ -104,12 +106,12 @@ const unlike = async (params, credentials, postId) => {
 
 const comment = async (params, credentials, postId, comment) => {
   try {
-    let response = await fetch(baseURL + '/api/posts/comment', {
-      method: 'PUT',
+    let response = await fetch(baseURL + "/api/posts/comment", {
+      method: "PUT",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + credentials.t,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + credentials.t,
       },
 
       body: JSON.stringify({ userId: params.userId, postId, comment }),
@@ -122,12 +124,12 @@ const comment = async (params, credentials, postId, comment) => {
 
 const uncomment = async (params, credentials, postId, comment) => {
   try {
-    let response = await fetch(baseURL + '/api/posts/uncomment', {
-      method: 'PUT',
+    let response = await fetch(baseURL + "/api/posts/uncomment", {
+      method: "PUT",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + credentials.t,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + credentials.t,
       },
 
       body: JSON.stringify({ userId: params.userId, postId, comment }),
@@ -138,4 +140,13 @@ const uncomment = async (params, credentials, postId, comment) => {
   }
 };
 
-export { listByUser, listNewsFeed, create, remove, like, unlike, comment, uncomment };
+export {
+  listByUser,
+  listNewsFeed,
+  create,
+  remove,
+  like,
+  unlike,
+  comment,
+  uncomment,
+};

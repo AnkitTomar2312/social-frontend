@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import auth from './../auth/auth-helper';
-import FindPeople from './../user/FindPeople';
-import Newsfeed from './../post/Newsfeed';
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import auth from "./../auth/auth-helper";
+import FindPeople from "./../user/FindPeople";
+import Newsfeed from "./../post/Newsfeed";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,12 +15,14 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     maxWidth: 600,
-    margin: 'auto',
+    margin: "auto",
     marginTop: theme.spacing(5),
     marginBottom: theme.spacing(5),
   },
   title: {
-    padding: `${theme.spacing(3)}px ${theme.spacing(2.5)}px ${theme.spacing(2)}px`,
+    padding: `${theme.spacing(3)}px ${theme.spacing(2.5)}px ${theme.spacing(
+      2
+    )}px`,
     color: theme.palette.text.secondary,
   },
   media: {
@@ -28,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
   },
   credit: {
     padding: 10,
-    textAlign: 'right',
-    backgroundColor: '#ededed',
-    borderBottom: '1px solid #d0d0d0',
-    '& a': {
-      color: '#3f4771',
+    textAlign: "right",
+    backgroundColor: "#ededed",
+    borderBottom: "1px solid #d0d0d0",
+    "& a": {
+      color: "#3f4771",
     },
   },
 }));
@@ -72,7 +74,8 @@ export default function Home({ history }) {
       {defaultPage && (
         <Grid container spacing={8}>
           <Grid item xs={8} sm={7}>
-            <Newsfeed />
+            {/* <Newsfeed /> */}
+            hello
           </Grid>
           <Grid item xs={6} sm={5}>
             <FindPeople />
