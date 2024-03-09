@@ -51,7 +51,6 @@ export default function Profile({ match }) {
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
-
     read(
       {
         userId: match.params.userId,
@@ -64,7 +63,7 @@ export default function Profile({ match }) {
       } else {
         let following = checkFollow(data);
         setValues({ ...values, user: data, following: following });
-        loadPosts(data.id);
+        loadPosts(data._id);
       }
     });
     return function cleanup() {
@@ -124,6 +123,7 @@ export default function Profile({ match }) {
   if (values.redirectToSignin) {
     return <Redirect to="/signin" />;
   }
+
   return (
     <Paper className={classes.root} elevation={4}>
       <Typography variant="h6" className={classes.title}>
@@ -165,11 +165,11 @@ export default function Profile({ match }) {
           />
         </ListItem>
       </List>
-      {/* <ProfileTabs
+      <ProfileTabs
         user={values.user}
         posts={posts}
         removePostUpdate={removePost}
-      /> */}
+      />
     </Paper>
   );
 }
