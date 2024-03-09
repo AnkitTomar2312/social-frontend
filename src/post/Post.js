@@ -54,7 +54,7 @@ export default function Post(props) {
   const classes = useStyles();
   const jwt = auth.isAuthenticated();
   const checkLike = (likes) => {
-    let match = likes.indexOf(jwt.user._id) !== -1;
+    let match = likes.indexOf(jwt.user.id) !== -1;
     return match;
   };
   const [values, setValues] = useState({
@@ -71,12 +71,12 @@ export default function Post(props) {
     let callApi = values.like ? unlike : like;
     callApi(
       {
-        userId: jwt.user._id,
+        userId: jwt.user.id,
       },
       {
-        t: jwt.token,
+        t: jwt.accessToken,
       },
-      props.post._id
+      props.post.id
     ).then((data) => {
       if (data.error) {
         console.log(data.error);
@@ -93,10 +93,10 @@ export default function Post(props) {
   const deletePost = () => {
     remove(
       {
-        postId: props.post._id,
+        postId: props.post.id,
       },
       {
-        t: jwt.token,
+        t: jwt.accessToken,
       }
     ).then((data) => {
       if (data.error) {
@@ -112,18 +112,18 @@ export default function Post(props) {
       <CardHeader
         avatar={
           <Avatar
-            src={baseURL + "/api/users/photo/" + props.post.postedBy._id}
+            src={baseURL + "/api/users/photo/" + props.post.postedBy.id}
           />
         }
         action={
-          props.post.postedBy._id === auth.isAuthenticated().user._id && (
+          props.post.postedBy.id === auth.isAuthenticated().user.id && (
             <IconButton onClick={deletePost}>
               <DeleteIcon />
             </IconButton>
           )
         }
         title={
-          <Link to={"/user/" + props.post.postedBy._id}>
+          <Link to={"/user/" + props.post.postedBy.id}>
             {props.post.postedBy.name}
           </Link>
         }
@@ -138,7 +138,7 @@ export default function Post(props) {
           <div className={classes.photo}>
             <img
               className={classes.media}
-              src={baseURL + "/api/posts/photo/" + props.post._id}
+              src={baseURL + "/api/posts/photo/" + props.post.id}
             />
           </div>
         )}
@@ -175,7 +175,7 @@ export default function Post(props) {
       </CardActions>
       <Divider />
       <Comments
-        postId={props.post._id}
+        postId={props.post.id}
         comments={values.comments}
         updateComments={updateComments}
       />

@@ -56,10 +56,10 @@ export default function FindPeople() {
 
     findPeople(
       {
-        userId: jwt.user._id,
+        userId: jwt.user.id,
       },
       {
-        t: jwt.token,
+        t: jwt.accessToken,
       },
       signal
     ).then((data) => {
@@ -76,12 +76,12 @@ export default function FindPeople() {
   const clickFollow = (user, index) => {
     follow(
       {
-        userId: jwt.user._id,
+        userId: jwt.user.id,
       },
       {
-        t: jwt.token,
+        t: jwt.accessToken,
       },
-      user._id
+      user.id
     ).then((data) => {
       if (data.error) {
         console.log(data.error);
@@ -100,6 +100,7 @@ export default function FindPeople() {
   const handleRequestClose = (event, reason) => {
     setValues({ ...values, open: false });
   };
+  console.log(values);
   return (
     <div>
       <Paper className={classes.root} elevation={4}>
@@ -107,16 +108,16 @@ export default function FindPeople() {
           Who to follow
         </Typography>
         <List>
-          {values.users.map((item, i) => {
+          {/* {values?.users?.map((item, i) => {
             return (
               <span key={i}>
                 <ListItem>
                   <ListItemAvatar className={classes.avatar}>
-                    <Avatar src={baseURL + "/api/users/photo/" + item._id} />
+                    <Avatar src={baseURL + "/api/users/photo/" + item.id} />
                   </ListItemAvatar>
                   <ListItemText primary={item.name} />
                   <ListItemSecondaryAction className={classes.follow}>
-                    <Link to={"/user/" + item._id}>
+                    <Link to={"/user/" + item.id}>
                       <IconButton
                         variant="contained"
                         color="secondary"
@@ -139,7 +140,7 @@ export default function FindPeople() {
                 </ListItem>
               </span>
             );
-          })}
+          })} */}
         </List>
       </Paper>
       <Snackbar

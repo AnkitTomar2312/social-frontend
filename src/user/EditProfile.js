@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Icon from '@material-ui/core/Icon';
-import Avatar from '@material-ui/core/Avatar';
-import FileUpload from '@material-ui/icons/AddPhotoAlternate';
-import { makeStyles } from '@material-ui/core/styles';
-import auth from './../auth/auth-helper';
-import { read, update } from './api-user.js';
-import { Redirect } from 'react-router-dom';
-import baseURL from '../config';
+import React, { useEffect, useState } from "react";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import Icon from "@material-ui/core/Icon";
+import Avatar from "@material-ui/core/Avatar";
+import FileUpload from "@material-ui/icons/AddPhotoAlternate";
+import { makeStyles } from "@material-ui/core/styles";
+import auth from "./../auth/auth-helper";
+import { read, update } from "./api-user.js";
+import { Redirect } from "react-router-dom";
+import baseURL from "../config";
 
 const useStyles = makeStyles((theme) => ({
   card: {
     maxWidth: 600,
-    margin: 'auto',
-    textAlign: 'center',
+    margin: "auto",
+    textAlign: "center",
     marginTop: theme.spacing(5),
     paddingBottom: theme.spacing(2),
   },
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.protectedTitle,
   },
   error: {
-    verticalAlign: 'middle',
+    verticalAlign: "middle",
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -35,33 +35,33 @@ const useStyles = makeStyles((theme) => ({
     width: 300,
   },
   submit: {
-    margin: 'auto',
+    margin: "auto",
     marginBottom: theme.spacing(2),
   },
   bigAvatar: {
     width: 60,
     height: 60,
-    margin: 'auto',
+    margin: "auto",
   },
   input: {
-    display: 'none',
+    display: "none",
   },
   filename: {
-    marginLeft: '10px',
+    marginLeft: "10px",
   },
 }));
 
 export default function EditProfile({ match }) {
   const classes = useStyles();
   const [values, setValues] = useState({
-    name: '',
-    about: '',
-    photo: '',
-    email: '',
-    password: '',
+    name: "",
+    about: "",
+    photo: "",
+    email: "",
+    password: "",
     redirectToProfile: false,
-    error: '',
-    id: '',
+    error: "",
+    id: "",
   });
   const jwt = auth.isAuthenticated();
 
@@ -73,13 +73,19 @@ export default function EditProfile({ match }) {
       {
         userId: match.params.userId,
       },
-      { t: jwt.token },
+      { t: jwt.accessToken },
       signal
     ).then((data) => {
       if (data & data.error) {
         setValues({ ...values, error: data.error });
       } else {
-        setValues({ ...values, id: data._id, name: data.name, email: data.email, about: data.about });
+        setValues({
+          ...values,
+          id: data.id,
+          name: data.name,
+          email: data.email,
+          about: data.about,
+        });
       }
     });
     return function cleanup() {
@@ -89,17 +95,17 @@ export default function EditProfile({ match }) {
 
   const clickSubmit = () => {
     let userData = new FormData();
-    values.name && userData.append('name', values.name);
-    values.email && userData.append('email', values.email);
-    values.passoword && userData.append('passoword', values.passoword);
-    values.about && userData.append('about', values.about);
-    values.photo && userData.append('photo', values.photo);
+    values.name && userData.append("name", values.name);
+    values.email && userData.append("email", values.email);
+    values.passoword && userData.append("passoword", values.passoword);
+    values.about && userData.append("about", values.about);
+    values.photo && userData.append("photo", values.photo);
     update(
       {
         userId: match.params.userId,
       },
       {
-        t: jwt.token,
+        t: jwt.accessToken,
       },
       userData
     ).then((data) => {
@@ -111,15 +117,15 @@ export default function EditProfile({ match }) {
     });
   };
   const handleChange = (name) => (event) => {
-    const value = name === 'photo' ? event.target.files[0] : event.target.value;
+    const value = name === "photo" ? event.target.files[0] : event.target.value;
     //userData.set(name, value)
     setValues({ ...values, [name]: value });
   };
   const photoUrl = values.id
     ? `${baseURL}/api/users/photo/${values.id}?${new Date().getTime()}`
-    : baseURL + '/api/users/defaultphoto';
+    : baseURL + "/api/users/defaultphoto";
   if (values.redirectToProfile) {
-    return <Redirect to={'/user/' + values.id} />;
+    return <Redirect to={"/user/" + values.id} />;
   }
   return (
     <Card className={classes.card}>
@@ -131,7 +137,7 @@ export default function EditProfile({ match }) {
         <br />
         <input
           accept="image/*"
-          onChange={handleChange('photo')}
+          onChange={handleChange("photo")}
           className={classes.input}
           id="icon-button-file"
           type="file"
@@ -141,15 +147,17 @@ export default function EditProfile({ match }) {
             Upload
             <FileUpload />
           </Button>
-        </label>{' '}
-        <span className={classes.filename}>{values.photo ? values.photo.name : ''}</span>
+        </label>{" "}
+        <span className={classes.filename}>
+          {values.photo ? values.photo.name : ""}
+        </span>
         <br />
         <TextField
           id="name"
           label="Name"
           className={classes.textField}
           value={values.name}
-          onChange={handleChange('name')}
+          onChange={handleChange("name")}
           margin="normal"
         />
         <br />
@@ -159,7 +167,7 @@ export default function EditProfile({ match }) {
           multiline
           rows="2"
           value={values.about}
-          onChange={handleChange('about')}
+          onChange={handleChange("about")}
           className={classes.textField}
           margin="normal"
         />
@@ -170,7 +178,7 @@ export default function EditProfile({ match }) {
           label="Email"
           className={classes.textField}
           value={values.email}
-          onChange={handleChange('email')}
+          onChange={handleChange("email")}
           margin="normal"
         />
         <br />
@@ -180,10 +188,10 @@ export default function EditProfile({ match }) {
           label="Password"
           className={classes.textField}
           value={values.password}
-          onChange={handleChange('password')}
+          onChange={handleChange("password")}
           margin="normal"
         />
-        <br />{' '}
+        <br />{" "}
         {values.error && (
           <Typography component="p" color="error">
             <Icon color="error" className={classes.error}>
@@ -194,7 +202,12 @@ export default function EditProfile({ match }) {
         )}
       </CardContent>
       <CardActions>
-        <Button color="primary" variant="contained" onClick={clickSubmit} className={classes.submit}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={clickSubmit}
+          className={classes.submit}
+        >
           Submit
         </Button>
       </CardActions>

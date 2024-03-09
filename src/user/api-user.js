@@ -134,8 +134,7 @@ const findPeople = async (params, credentials, signal) => {
         },
       }
     );
-
-    return await response.json();
+    return response;
   } catch (err) {
     console.log(err);
   }

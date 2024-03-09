@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import auth from "./../auth/auth-helper";
 import FindPeople from "./../user/FindPeople";
 import Newsfeed from "./../post/Newsfeed";
+import Users from "../user/Users";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,8 +75,8 @@ export default function Home({ history }) {
       {defaultPage && (
         <Grid container spacing={8}>
           <Grid item xs={8} sm={7}>
-            {/* <Newsfeed /> */}
-            hello
+            <Newsfeed />
+            NewsFeed
           </Grid>
           <Grid item xs={6} sm={5}>
             <FindPeople />

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import auth from '../auth/auth-helper';
-import CardHeader from '@material-ui/core/CardHeader';
-import TextField from '@material-ui/core/TextField';
-import Avatar from '@material-ui/core/Avatar';
-import Icon from '@material-ui/core/Icon';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import { comment, uncomment } from './api-post.js';
-import { Link } from 'react-router-dom';
-import baseURL from '../config';
+import React, { useState } from "react";
+import auth from "../auth/auth-helper";
+import CardHeader from "@material-ui/core/CardHeader";
+import TextField from "@material-ui/core/TextField";
+import Avatar from "@material-ui/core/Avatar";
+import Icon from "@material-ui/core/Icon";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import { comment, uncomment } from "./api-post.js";
+import { Link } from "react-router-dom";
+import baseURL from "../config";
 
 const useStyles = makeStyles((theme) => ({
   cardHeader: {
@@ -20,28 +20,28 @@ const useStyles = makeStyles((theme) => ({
     height: 25,
   },
   commentField: {
-    width: '96%',
+    width: "96%",
   },
   commentText: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: theme.spacing(1),
     margin: `2px ${theme.spacing(2)}px 2px 2px`,
   },
   commentDate: {
-    display: 'block',
-    color: 'gray',
-    fontSize: '0.8em',
+    display: "block",
+    color: "gray",
+    fontSize: "0.8em",
   },
   commentDelete: {
-    fontSize: '1.6em',
-    verticalAlign: 'middle',
-    cursor: 'pointer',
+    fontSize: "1.6em",
+    verticalAlign: "middle",
+    cursor: "pointer",
   },
 }));
 
 export default function Comments(props) {
   const classes = useStyles();
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const jwt = auth.isAuthenticated();
   const handleChange = (event) => {
     setText(event.target.value);
@@ -51,10 +51,10 @@ export default function Comments(props) {
       event.preventDefault();
       comment(
         {
-          userId: jwt.user._id,
+          userId: jwt.user.id,
         },
         {
-          t: jwt.token,
+          t: jwt.accessToken,
         },
         props.postId,
         { text: text }
@@ -62,7 +62,7 @@ export default function Comments(props) {
         if (data.error) {
           console.log(data.error);
         } else {
-          setText('');
+          setText("");
           props.updateComments(data.comments);
         }
       });
@@ -72,10 +72,10 @@ export default function Comments(props) {
   const deleteComment = (comment) => (event) => {
     uncomment(
       {
-        userId: jwt.user._id,
+        userId: jwt.user.id,
       },
       {
-        t: jwt.token,
+        t: jwt.accessToken,
       },
       props.postId,
       comment
@@ -91,13 +91,16 @@ export default function Comments(props) {
   const commentBody = (item) => {
     return (
       <p className={classes.commentText}>
-        <Link to={'/user/' + item.postedBy._id}>{item.postedBy.name}</Link>
+        <Link to={"/user/" + item.postedBy.id}>{item.postedBy.name}</Link>
         <br />
         {item.text}
         <span className={classes.commentDate}>
           {new Date(item.created).toDateString()} |
-          {auth.isAuthenticated().user._id === item.postedBy._id && (
-            <Icon onClick={deleteComment(item)} className={classes.commentDelete}>
+          {auth.isAuthenticated().user.id === item.postedBy.id && (
+            <Icon
+              onClick={deleteComment(item)}
+              className={classes.commentDelete}
+            >
               delete
             </Icon>
           )}
@@ -112,7 +115,7 @@ export default function Comments(props) {
         avatar={
           <Avatar
             className={classes.smallAvatar}
-            src={baseURL + '/api/users/photo/' + auth.isAuthenticated().user._id}
+            src={baseURL + "/api/users/photo/" + auth.isAuthenticated().user.id}
           />
         }
         title={
@@ -131,7 +134,12 @@ export default function Comments(props) {
       {props.comments.map((item, i) => {
         return (
           <CardHeader
-            avatar={<Avatar className={classes.smallAvatar} src={baseURL + '/api/users/photo/' + item.postedBy._id} />}
+            avatar={
+              <Avatar
+                className={classes.smallAvatar}
+                src={baseURL + "/api/users/photo/" + item.postedBy.id}
+              />
+            }
             title={commentBody(item)}
             className={classes.cardHeader}
             key={i}
