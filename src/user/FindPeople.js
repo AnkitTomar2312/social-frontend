@@ -16,7 +16,7 @@ import auth from "./../auth/auth-helper";
 import Snackbar from "@material-ui/core/Snackbar";
 import ViewIcon from "@material-ui/icons/Visibility";
 import baseURL from "../config.js";
-
+import User from "./Users.js";
 const useStyles = makeStyles((theme) => ({
   root: theme.mixins.gutters({
     padding: theme.spacing(1),
@@ -100,15 +100,15 @@ export default function FindPeople() {
   const handleRequestClose = (event, reason) => {
     setValues({ ...values, open: false });
   };
-  console.log(values);
   return (
     <div>
       <Paper className={classes.root} elevation={4}>
         <Typography type="title" className={classes.title}>
           Who to follow
         </Typography>
+
         <List>
-          {/* {values?.users?.map((item, i) => {
+          {values.users?.map((item, i) => {
             return (
               <span key={i}>
                 <ListItem>
@@ -140,7 +140,7 @@ export default function FindPeople() {
                 </ListItem>
               </span>
             );
-          })} */}
+          })}
         </List>
       </Paper>
       <Snackbar

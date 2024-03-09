@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     margin: 30,
+    paddingTop: "80px",
   },
   card: {
     maxWidth: 600,
@@ -73,13 +74,12 @@ export default function Home({ history }) {
         </Grid>
       )}
       {defaultPage && (
-        <Grid container spacing={8}>
+        <Grid container spacing={5}>
           <Grid item xs={8} sm={7}>
             <Newsfeed />
-            NewsFeed
           </Grid>
           <Grid item xs={6} sm={5}>
-            <FindPeople />
+            <Users />
           </Grid>
         </Grid>
       )}

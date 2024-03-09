@@ -53,7 +53,6 @@ export default function Newsfeed() {
       abortController.abort();
     };
   }, []);
-
   const addPost = (post) => {
     const updatedPosts = [...posts];
     updatedPosts.unshift(post);
@@ -73,7 +72,7 @@ export default function Newsfeed() {
       <Divider />
       <NewPost addUpdate={addPost} />
       <Divider />
-      {/* <PostList removeUpdate={removePost} posts={posts} /> */}
+      <PostList removeUpdate={removePost} posts={posts} />
     </Card>
   );
 }

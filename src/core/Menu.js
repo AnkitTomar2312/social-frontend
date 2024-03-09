@@ -14,7 +14,7 @@ const isActive = (history, path) => {
   else return { color: "#ffffff" };
 };
 const Menu = withRouter(({ history }) => (
-  <AppBar position="static">
+  <AppBar position="fixed">
     <Toolbar>
       <FaceBookIcon />
       <Typography variant="h6" color="inherit">

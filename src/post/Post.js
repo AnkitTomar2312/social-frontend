@@ -63,9 +63,14 @@ export default function Post(props) {
     comments: props.post.comments,
   });
 
-  // useEffect(() => {
-  //   setValues({...values, like:checkLike(props.post.likes), likes: props.post.likes.length, comments: props.post.comments})
-  // }, [])
+  useEffect(() => {
+    setValues({
+      ...values,
+      like: checkLike(props.post.likes),
+      likes: props.post.likes.length,
+      comments: props.post.comments,
+    });
+  }, []);
 
   const clickLike = () => {
     let callApi = values.like ? unlike : like;
@@ -93,7 +98,7 @@ export default function Post(props) {
   const deletePost = () => {
     remove(
       {
-        postId: props.post.id,
+        postId: props.post._id,
       },
       {
         t: jwt.accessToken,
@@ -106,7 +111,6 @@ export default function Post(props) {
       }
     });
   };
-
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -138,7 +142,7 @@ export default function Post(props) {
           <div className={classes.photo}>
             <img
               className={classes.media}
-              src={baseURL + "/api/posts/photo/" + props.post.id}
+              src={baseURL + "/api/posts/photo/" + props.post._id}
             />
           </div>
         )}
@@ -175,7 +179,7 @@ export default function Post(props) {
       </CardActions>
       <Divider />
       <Comments
-        postId={props.post.id}
+        postId={props.post._id}
         comments={values.comments}
         updateComments={updateComments}
       />
